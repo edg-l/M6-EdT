@@ -42,7 +42,7 @@ public class Program {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else if (option == 2) {
+		} else {
 			if (!file.exists() || !file.isFile()) {
 				System.out.println("L'arxiu no existeix o no es un fitxer.");
 				return;
