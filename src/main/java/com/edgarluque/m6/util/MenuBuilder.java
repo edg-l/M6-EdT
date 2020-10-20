@@ -4,6 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Builds a menu which adapts to the length of added lines.
+ * @author Edgar Luque
+ */
 public class MenuBuilder {
     /**
      * Stores information for each line added.
