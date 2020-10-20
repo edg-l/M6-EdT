@@ -33,7 +33,7 @@ public class Habitacio {
             props.store(propsStream, "");
 
             moblesStream.writeInt(mobles.size());
-            for(Moble moble: mobles)
+            for (Moble moble : mobles)
                 moble.save(moblesStream);
         } catch (Exception e) {
             e.printStackTrace();

@@ -38,21 +38,21 @@ public class MenuBuilder {
             int length = text.length();
             int start = 2;
 
-            if(centered)
+            if (centered)
                 start = frameWidth / 2 - (length / 2);
 
-            for(int i = 0; i < frameWidth; i++) {
-                if(i == 0 || i == frameWidth - 1) {
+            for (int i = 0; i < frameWidth; i++) {
+                if (i == 0 || i == frameWidth - 1) {
                     builder.append(wall);
                     continue;
                 }
 
-                if(i < start || i >= start + length) {
+                if (i < start || i >= start + length) {
                     builder.append(fill);
                     continue;
                 }
 
-                if(i >= start && i < start + length) {
+                if (i >= start && i < start + length) {
                     builder.append(text.charAt(i - start));
                     continue;
                 }
@@ -100,15 +100,15 @@ public class MenuBuilder {
         int maxWidth = minFrameSize;
 
         // First pass to get the longest line.
-        for(TextLine line: lines) {
+        for (TextLine line : lines) {
             int length = line.getTextLength();
-            if(length > maxWidth)
+            if (length > maxWidth)
                 maxWidth = length;
         }
 
         final StringBuilder sb = new StringBuilder();
 
-        for(TextLine line: lines) {
+        for (TextLine line : lines) {
             line.setFrameWidth(maxWidth + 4);
             sb.append(line.toString());
             sb.append(System.lineSeparator());
