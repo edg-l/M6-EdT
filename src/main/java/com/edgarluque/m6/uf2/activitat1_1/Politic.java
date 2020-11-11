@@ -55,11 +55,11 @@ public class Politic {
     }
 
     public static List<Politic> load(Connection conn) {
+        List<Politic> politics = new ArrayList<>();
         try (Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(
                     "SELECT nif, nom, dataNaixement, sou, esCorrupte from Politic;"
             );
-            List<Politic> politics = new ArrayList<>();
             while (resultSet.next()) {
                 String nif = resultSet.getString("nif");
                 String nom = resultSet.getString("nom");
@@ -68,10 +68,12 @@ public class Politic {
                 boolean esCorrupte = resultSet.getBoolean("esCorrupte");
                 politics.add(new Politic(nif, nom, dataNaixament, sou, esCorrupte));
             }
-            return politics;
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        return politics;
     }
 
     public static Politic fromInput() {
