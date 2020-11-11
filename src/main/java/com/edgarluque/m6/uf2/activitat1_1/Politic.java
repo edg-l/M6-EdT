@@ -26,7 +26,7 @@ public class Politic {
     }
 
     public void insert(Connection conn) {
-        try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO Politic (nif, nom, dataNaixement, sou, esCorrupte) VALUES (?,?,?,?,?);")) {
+        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO Politic (nif, nom, dataNaixement, sou, esCorrupte) VALUES (?,?,?,?,?);")) {
             stmt.setString(1, nif);
             stmt.setString(2, nom);
             stmt.setDate(3, java.sql.Date.valueOf(dataNaixament.toInstant().atZone(ZoneId.of("Europe/Madrid")).toLocalDate()));
@@ -39,7 +39,7 @@ public class Politic {
     }
 
     public static void createTable(Connection conn) {
-        try(Statement stmt = conn.createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
             stmt.execute(
                     "CREATE TABLE IF NOT EXISTS Politic (" +
                             "nif CHAR(9) PRIMARY KEY," +
@@ -55,12 +55,12 @@ public class Politic {
     }
 
     public static List<Politic> load(Connection conn) {
-        try(Statement stmt = conn.createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(
                     "SELECT nif, nom, dataNaixement, sou, esCorrupte from Politic;"
             );
             List<Politic> politics = new ArrayList<>();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 String nif = resultSet.getString("nif");
                 String nom = resultSet.getString("nom");
                 Date dataNaixament = resultSet.getDate("dataNaixement");
@@ -93,11 +93,9 @@ public class Politic {
             try {
                 System.out.println("Introdueix la data de naixament:");
                 dataNaixament = formatter.parse(scanner.nextLine());
-            }
-            catch (ParseException e) {
+            } catch (ParseException e) {
                 continue;
-            }
-            finally {
+            } finally {
                 break;
             }
         }
