@@ -38,6 +38,18 @@ public class Politic {
         }
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Politic{");
+        sb.append("nif='").append(nif).append('\'');
+        sb.append(", nom='").append(nom).append('\'');
+        sb.append(", dataNaixament=").append(dataNaixament);
+        sb.append(", sou=").append(sou);
+        sb.append(", esCorrupte=").append(esCorrupte);
+        sb.append('}');
+        return sb.toString();
+    }
+
     public static void createTable(Connection conn) {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
