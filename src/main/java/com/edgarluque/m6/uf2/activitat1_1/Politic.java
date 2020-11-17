@@ -3,7 +3,6 @@ package com.edgarluque.m6.uf2.activitat1_1;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +28,7 @@ public class Politic {
         try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO Politic (nif, nom, dataNaixement, sou, esCorrupte) VALUES (?,?,?,?,?);")) {
             stmt.setString(1, nif);
             stmt.setString(2, nom);
-            stmt.setDate(3, java.sql.Date.valueOf(dataNaixament.toInstant().atZone(ZoneId.of("Europe/Madrid")).toLocalDate()));
+            stmt.setDate(3, java.sql.Date.valueOf(dataNaixament.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
             stmt.setInt(4, sou);
             stmt.setBoolean(5, esCorrupte);
             stmt.execute();
@@ -66,11 +65,11 @@ public class Politic {
         }
     }
 
-    public static List<Politic> load(Connection conn) {
+    public static List<Politic> query(Connection conn) {
         List<Politic> politics = new ArrayList<>();
         try (Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(
-                    "SELECT nif, nom, dataNaixement, sou, esCorrupte from Politic;"
+                    "SELECT * from Politic;"
             );
             while (resultSet.next()) {
                 String nif = resultSet.getString("nif");
@@ -107,10 +106,8 @@ public class Politic {
             try {
                 System.out.println("Introdueix la data de naixament:");
                 dataNaixament = formatter.parse(scanner.nextLine());
-            } catch (ParseException e) {
-                continue;
-            } finally {
                 break;
+            } catch (ParseException ignored) {
             }
         }
         System.out.println("Introdueix el sou:");

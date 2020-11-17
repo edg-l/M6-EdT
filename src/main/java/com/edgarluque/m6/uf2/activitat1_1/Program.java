@@ -13,7 +13,7 @@ public class Program {
 
             Politic.fromInput().insert(conn);
 
-            List<Politic> politics = Politic.load(conn);
+            List<Politic> politics = Politic.query(conn);
             for(Politic p: politics)
                 System.out.println(p);
         }
