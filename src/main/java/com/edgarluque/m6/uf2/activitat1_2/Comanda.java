@@ -86,7 +86,8 @@ public class Comanda {
                             "num_comanda INT PRIMARY KEY," +
                             "preu_total DECIMAL(11, 2) NOT NULL," +
                             "data DATE NOT NULL," +
-                            "dni_client INT REFERENCES Client(dni)" +
+                            "dni_client INT," +
+                            "FOREIGN KEY (dni_client) REFERENCES Client(dni)" +
                             ");");
             System.out.println("Taula Comanda creada.");
         } catch (SQLException throwables) {

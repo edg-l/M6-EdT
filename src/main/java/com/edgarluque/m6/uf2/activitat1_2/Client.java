@@ -7,11 +7,13 @@ public class Client {
     private int dni;
     private String nom;
     private boolean premium;
+    private HashSet<Comanda> comandes;
 
     public Client(int dni, String nom, boolean premium) {
         this.dni = dni;
         this.nom = nom;
         this.premium = premium;
+        this.comandes = new HashSet<>();
     }
 
     @Override
@@ -47,7 +49,16 @@ public class Client {
                             ");");
             System.out.println("Taula Client creada.");
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println(throwables.getMessage());;
+        }
+    }
+
+    public static void deleteAll(Connection conn) {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("DELETE FROM Clients;");
+            System.out.println("Totes les dades eliminades.");
+        } catch (SQLException throwables) {
+            System.out.println(throwables.getMessage());;
         }
     }
 
@@ -62,8 +73,8 @@ public class Client {
         }
     }
 
-    public HashSet<Comanda> getComandes(Connection conn) {
-        return Comanda.queryByClientID(conn, dni);
+    public void loadComandes(Connection conn) {
+        comandes = Comanda.queryByClientID(conn, dni);
     }
 
     public static Client fromInput() {
@@ -89,7 +100,9 @@ public class Client {
                 int dni = resultSet.getInt("dni");
                 String nom = resultSet.getString("nom");
                 boolean premium = resultSet.getBoolean("premium");
-                clients.add(new Client(dni, nom, premium));
+                Client client = new Client(dni, nom, premium);
+                client.loadComandes(conn);
+                clients.add(client);
             }
 
         } catch (SQLException throwables) {
