@@ -3,7 +3,7 @@ package com.edgarluque.m6.uf2.activitat1_2;
 import java.sql.*;
 import java.util.*;
 
-public class Client {
+public class Client implements Comparable<Client> {
     private int dni;
     private String nom;
     private boolean premium;
@@ -39,6 +39,11 @@ public class Client {
         return sb.toString();
     }
 
+    @Override
+    public int compareTo(Client client) {
+        return Integer.compare(dni, client.dni);
+    }
+
     public static void createTable(Connection conn) {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(
@@ -68,6 +73,10 @@ public class Client {
             stmt.setString(2, nom);
             stmt.setBoolean(3, premium);
             stmt.execute();
+
+            for(Comanda cmd: comandes) {
+                cmd.insert(conn);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,8 +99,8 @@ public class Client {
         return new Client(dni, nom, premium);
     }
 
-    public static HashSet<Client> query(Connection conn) {
-        HashSet<Client> clients = new HashSet<>();
+    public static SortedSet<Client> query(Connection conn) {
+        SortedSet<Client> clients = new TreeSet<>();
         try (Statement stmt = conn.createStatement()) {
             ResultSet resultSet = stmt.executeQuery(
                     "SELECT * FROM Client;"
@@ -110,5 +119,17 @@ public class Client {
         }
 
         return clients;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public HashSet<Comanda> getComandes() {
+        return comandes;
     }
 }
