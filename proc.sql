@@ -33,11 +33,10 @@ begin
 	declare v_dni int;
 	declare v_suma int;
 	declare c_info cursor for 
-		select c.dni, sum(co.preu_total)
-		from Client c 
-		left join Comanda co on co.dni_client = c.dni 
-		where month(co.data) = p_mes and year(co.data) = p_any
-		group by c.dni;
+		select dni_client, sum(preu_total)
+		from Comanda
+		where month(data) = p_mes and year(data) = p_any
+		group by dni_client;
 	declare continue handler for not found set acaba = true;
 	open c_info;
 	read_loop: loop
