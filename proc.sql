@@ -36,7 +36,7 @@ begin
 		select c.dni, sum(co.preu_total)
 		from Client c 
 		left join Comanda co on co.dni_client = c.dni 
-		where month(co.data) = 12 and year(co.data) = 2020 
+		where month(co.data) = p_mes and year(co.data) = p_any
 		group by c.dni;
 	declare continue handler for not found set acaba = true;
 	open c_info;
