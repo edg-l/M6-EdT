@@ -7,7 +7,7 @@ create table if not exists Client (
 
 create table if not exists Comanda (
 	num_comanda int,
-	preu_total decimal(8, 2) not null,
+	preu_total decimal(11, 2) not null,
 	data date not null,
 	dni_client int not null,
 	primary key(num_comanda),

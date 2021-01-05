@@ -94,6 +94,10 @@ public class Program {
                         }
                         break;
                     }
+                    case 7: {
+                        ResumFacturacio.generateFacturacio(conn);
+                        break;
+                    }
                 }
             }
         } catch (SQLException throwables) {
