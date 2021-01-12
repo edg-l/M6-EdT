@@ -51,7 +51,7 @@ public class Ordinador implements Serializable {
                 String numSerie = stream.readUTF();
                 int velocitat = stream.readInt();
                 boolean portatil = stream.readBoolean();
-                ordinadors.add(new Ordinador(numSerie, velocitat, portatil))
+                ordinadors.add(new Ordinador(numSerie, velocitat, portatil));
             }
         } catch (Exception e) {
             e.printStackTrace();
