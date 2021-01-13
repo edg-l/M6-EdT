@@ -14,10 +14,10 @@
         <property name="hibernate.connection.username">m6</property>
         <property name="hibernate.connection.password">m6</property>
         <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="format_sql">true</property>
+        <!--<property name="hbm2ddl.auto">create</property>-->
 
         <!-- Mapping With Model Class Containing Annotations -->
-        <!-- no funciona, ho faig directament -->
-        <mapping class="com.edgarluque.m6.uf2.activitat3_1.Persona" />
+        <mapping class="com.edgarluque.m6.uf2.activitat3_1.Politic" />
     </session-factory>
 </hibernate-configuration>
