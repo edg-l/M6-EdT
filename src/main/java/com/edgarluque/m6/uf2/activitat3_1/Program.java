@@ -4,12 +4,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.hibernate.service.ServiceRegistry;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Program {
@@ -18,36 +16,43 @@ public class Program {
                 .configure().build();
         SessionFactory factory = new MetadataSources(serviceRegistry)
                 .buildMetadata().buildSessionFactory();
-        try {
-            System.out.println("a:");
-            List<Politic> politics = loadPolitics(factory);
-            System.out.println("politics:");
-            System.out.println(politics);
-            System.out.println("length: " + politics.size());
-            for(Politic p: politics) {
-                System.out.println(p);
-            }
-            factory.close();
-        } catch (Exception e) {
-            System.out.println("excepcio:");
-            System.out.println(e);
-            StandardServiceRegistryBuilder.destroy(serviceRegistry);
+
+        List<Politic> politics = loadPolitics(factory);
+        for (Politic p : politics) {
+            System.out.println(p);
         }
+        factory.close();
+        StandardServiceRegistryBuilder.destroy(serviceRegistry);
     }
 
     public static void savePolitic(SessionFactory factory, Politic politic) {
         Session session = factory.openSession();
         session.beginTransaction();
-        session.save(politic);
-        session.getTransaction().commit();
+
+        try {
+            session.save(politic);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         session.close();
     }
 
     public static List<Politic> loadPolitics(SessionFactory factory) {
         Session session = factory.openSession();
-        Query<Politic> query = session.createQuery("FROM Politic", Politic.class);
-        List<Politic> politics = query.list();
-        session.close();
+
+        List<Politic> politics = new ArrayList<>();
+        try {
+            Query<Politic> query = session.createQuery("FROM Politic", Politic.class);
+            politics = query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return politics;
     }
 }
