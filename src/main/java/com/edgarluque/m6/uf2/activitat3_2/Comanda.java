@@ -14,7 +14,7 @@ public class Comanda implements Serializable {
     @Column(name = "preu_total", precision = 8, scale = 2)
     private BigDecimal preuTotal;
     private Date data;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "dni_client")
     private Client client;
 

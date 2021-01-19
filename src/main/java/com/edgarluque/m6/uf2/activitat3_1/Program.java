@@ -38,7 +38,6 @@ public class Program {
         } finally {
             session.close();
         }
-        session.close();
     }
 
     public static List<Politic> loadPolitics(SessionFactory factory) {
