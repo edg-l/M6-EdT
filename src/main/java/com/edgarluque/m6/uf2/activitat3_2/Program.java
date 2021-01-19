@@ -40,6 +40,9 @@ public class Program {
                 case 2:
                     menu2(factory);
                     break;
+                case 3:
+                    menu3(factory);
+                    break;
                 case 0:
                     menu.requestStop();
                     break;
@@ -123,6 +126,25 @@ public class Program {
             }
         } catch (Exception e) {
             session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public static void menu3(SessionFactory factory) {
+        Session session = factory.openSession();
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introdueix el nom:");
+        String nom = sc.nextLine();
+
+        List<Client> clients = new ArrayList<>();
+        try {
+            Query<Client> query = session.createQuery("FROM Client where name LIKE :name", Client.class);
+            clients = query.setParameter("name", nom + "%").list();
+            printClients(clients);
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
