@@ -21,11 +21,30 @@ public class Program {
                 .buildMetadata().buildSessionFactory();
 
         // codi aqui
-        List<Client> clients = loadClients(factory);
         MenuBuilder menu = new MenuBuilder();
         menu.addTitle("Activitat 3.2", true);
         menu.addSeparator();
         menu.addLine("1 - Eliminar un client", false);
+        menu.addLine("2 - Modificar un client", false);
+        menu.addSeparator();
+        menu.addLine("0 - Sortir", false);
+        menu.addSeparator();
+
+        while (menu.isRunning()) {
+            menu.print();
+
+            switch (menu.askOption()) {
+                case 1:
+                    menu1(factory);
+                    break;
+                case 2:
+                    menu2(factory);
+                    break;
+                case 0:
+                    menu.requestStop();
+                    break;
+            }
+        }
 
         factory.close();
         StandardServiceRegistryBuilder.destroy(serviceRegistry);
@@ -66,6 +85,37 @@ public class Program {
             Client client = session.get(Client.class, dni);
             if(client != null) {
                 session.delete(client);
+                session.getTransaction().commit();
+            } else {
+                System.out.println("El client no existeix.");
+                session.getTransaction().rollback();
+            }
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    public static void menu2(SessionFactory factory) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("DNI del client:");
+        int dni = sc.nextInt();
+
+        Session session = factory.openSession();
+        session.beginTransaction();
+
+        try {
+            Client client = session.get(Client.class, dni);
+            if(client != null) {
+                System.out.println("Introdueix el nou nom:");
+                String nom = sc.nextLine();
+                System.out.println("Es premium (s/n)?:");
+                boolean premium = sc.nextLine().equals("s");
+                client.setNom(nom);
+                client.setPremium(premium);
+                session.save(client);
                 session.getTransaction().commit();
             } else {
                 System.out.println("El client no existeix.");
