@@ -3,6 +3,7 @@ package com.edgarluque.m6.uf2.activitat3_2;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Scanner;
 
 @Entity
 @Table(name = "act32_client")
@@ -61,7 +62,22 @@ public class Client implements Serializable {
                 "dni=" + dni +
                 ", nom='" + nom + '\'' +
                 ", premium=" + premium +
-                ", comandes=" + comandes +
                 '}';
+    }
+
+    public static Client fromInput() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Introdueix el dni:");
+        int dni = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Introdueix el nom:");
+        String nom = sc.nextLine();
+
+        System.out.println("Introdueix si es premium (s/n):");
+        boolean premium = sc.nextLine().equals("s");
+
+        return new Client(dni, nom, premium);
     }
 }

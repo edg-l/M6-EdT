@@ -3,7 +3,13 @@ package com.edgarluque.m6.uf2.activitat3_2;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 
 @Entity
 @Table(name = "act32_comanda")
@@ -65,7 +71,31 @@ public class Comanda implements Serializable {
                 "numComanda=" + numComanda +
                 ", preuTotal=" + preuTotal +
                 ", data=" + data +
-                ", client=" + client +
                 '}';
+    }
+
+    public static Comanda fromInput(Client client) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Numero comanda:");
+        int num = sc.nextInt();
+
+        System.out.println("Preu total");
+        BigDecimal preu = sc.nextBigDecimal();
+        sc.nextLine();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Data (yyyy-MM-dd):");
+        Date data;
+        while (true) {
+            try {
+                System.out.println("Introdueix la data (yyyy-MM-dd)");
+                data = Date.valueOf(LocalDate.parse(sc.nextLine()));
+                break;
+            } catch (DateTimeParseException ignored) {
+            }
+        }
+
+        return new Comanda(num, preu, data, client);
     }
 }
