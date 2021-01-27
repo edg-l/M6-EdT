@@ -87,6 +87,7 @@ public class Program {
 
     public static Client selectClient(SessionFactory factory) {
         List<Client> clients = loadClients(factory);
+
         System.out.println("Selecciona un client:");
         printClients(clients);
 
@@ -156,9 +157,9 @@ public class Program {
             System.out.println("Introdueix el nom:");
             String nom = sc.nextLine();
 
-            List<Client> clients = new ArrayList<>();
+
             Query<Client> query = session.createQuery("FROM Client where nom LIKE :name", Client.class);
-            clients = query.setParameter("name", nom + "%").list();
+            List<Client> clients = query.setParameter("name", nom + "%").list();
             if (clients.isEmpty()) {
                 System.out.println("No s'ha trobat cap client.");
             } else

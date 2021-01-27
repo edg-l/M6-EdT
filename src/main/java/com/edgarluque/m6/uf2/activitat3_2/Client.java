@@ -2,8 +2,10 @@ package com.edgarluque.m6.uf2.activitat3_2;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 @Entity
 @Table(name = "act32_client")
@@ -12,9 +14,8 @@ public class Client implements Serializable {
     private int dni;
     private String nom;
     private boolean premium;
-    @OneToMany
-    @JoinColumn(name = "dni_client")
-    private List<Comanda> comandes;
+    @OneToMany(mappedBy = "client")
+    private Set<Comanda> comandes;
 
     public Client() {}
 
@@ -22,6 +23,7 @@ public class Client implements Serializable {
         this.dni = dni;
         this.nom = nom;
         this.premium = premium;
+        this.comandes = new HashSet<>();
     }
 
     public int getDni() {
@@ -48,11 +50,11 @@ public class Client implements Serializable {
         this.premium = premium;
     }
 
-    public List<Comanda> getComandes() {
+    public Set<Comanda> getComandes() {
         return comandes;
     }
 
-    public void setComandes(List<Comanda> comandes) {
+    public void setComandes(Set<Comanda> comandes) {
         this.comandes = comandes;
     }
 

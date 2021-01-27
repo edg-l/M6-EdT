@@ -20,8 +20,8 @@ public class Comanda implements Serializable {
     @Column(name = "preu_total", precision = 8, scale = 2)
     private BigDecimal preuTotal;
     private Date data;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "dni_client")
+    @ManyToOne
+    @JoinColumn(name = "dni_client", nullable = false)
     private Client client;
 
     public Comanda() {}
@@ -84,7 +84,6 @@ public class Comanda implements Serializable {
         BigDecimal preu = sc.nextBigDecimal();
         sc.nextLine();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Data (yyyy-MM-dd):");
         Date data;
         while (true) {

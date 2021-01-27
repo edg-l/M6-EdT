@@ -9,5 +9,5 @@ create table if not exists act32_comanda (
     num_comanda int primary key,
     preu_total decimal(8,2) not null,
     data date not null,
-    foreign key (dni_client) references act32_client(dni) ON DELETE CASCADE
+    foreign key (dni_client) references act32_client(dni)
 );
