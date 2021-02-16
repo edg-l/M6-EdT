@@ -21,5 +21,7 @@
         <mapping class="com.edgarluque.m6.uf2.activitat3_1.Politic" />
         <mapping class="com.edgarluque.m6.uf2.activitat3_2.Client" />
         <mapping class="com.edgarluque.m6.uf2.activitat3_2.Comanda" />
+        <mapping class="com.edgarluque.m6.examen_uf2.Nivell" />
+        <mapping class="com.edgarluque.m6.examen_uf2.Monstre" />
     </session-factory>
 </hibernate-configuration>

@@ -56,6 +56,14 @@
       <artifactId>hibernate-ehcache</artifactId>
       <version>5.4.27.Final</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongo-java-driver</artifactId>
+      <version>3.12.7</version>
+    </dependency>
+
+
 
   </dependencies>
 
