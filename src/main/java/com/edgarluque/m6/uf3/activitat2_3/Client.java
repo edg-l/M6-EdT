@@ -132,4 +132,16 @@ public class Client {
     public void setComandes(List<Comanda> comandes) {
         this.comandes = comandes;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "nif='" + nif + '\'' +
+                ", nom='" + nom + '\'' +
+                ", totalFacturacio=" + totalFacturacio +
+                ", telefon='" + telefon + '\'' +
+                ", correu='" + correu + '\'' +
+                ", comandes=" + comandes +
+                '}';
+    }
 }

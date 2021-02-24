@@ -61,6 +61,15 @@ public class Program {
         }
     }
 
+    public static void exercisi4(MongoCollection<Document> collection) {
+        List<Client> clients = Client.fromIterable(collection.find());
+
+        int i = 1;
+        for(Client c: clients) {
+            System.out.println(i + ") " + c.getNif());
+        }
+    }
+
     public static String askNonBlank(Scanner sc, String question) {
         String v;
 
