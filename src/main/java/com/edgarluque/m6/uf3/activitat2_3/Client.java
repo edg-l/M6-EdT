@@ -28,23 +28,26 @@ public class Client {
         this.nom = doc.getString("nom");
         this.totalFacturacio = doc.getInteger("totalFacturacio");
 
-        if(doc.containsKey("telefon"))
+        if (doc.containsKey("telefon"))
             this.telefon = doc.getString("telefon");
         else
             this.telefon = null;
 
-        if(doc.containsKey("correu"))
+        if (doc.containsKey("correu"))
             this.correu = doc.getString("correu");
         else
             this.correu = null;
 
         this.comandes = new ArrayList<>();
 
-        List<Document> docComandes = doc.getList("comandes", Document.class);
+        if(doc.containsKey("comandes")) {
+            List<Document> docComandes = doc.getList("comandes", Document.class);
 
-        for(Document d: docComandes) {
-            comandes.add(new Comanda(d));
+            for (Document d : docComandes) {
+                comandes.add(new Comanda(d));
+            }
         }
+
     }
 
     public Document toDocument() {
@@ -58,13 +61,15 @@ public class Client {
         if (correu != null)
             doc.append("correu", correu);
 
-        List<Document> docComandes = new ArrayList<>(comandes.size());
+        if(!comandes.isEmpty()) {
+            List<Document> docComandes = new ArrayList<>(comandes.size());
 
-        for(Comanda c: comandes) {
-            docComandes.add(c.toDocument());
+            for (Comanda c : comandes) {
+                docComandes.add(c.toDocument());
+            }
+
+            doc.append("comandes", docComandes);
         }
-
-        doc.append("comandes", docComandes);
 
         return doc;
     }
