@@ -6,6 +6,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import javax.print.Doc;
+import java.util.List;
 import java.util.Scanner;
 
 public class Program {
@@ -13,7 +15,7 @@ public class Program {
         try (MongoClient client = MongoClients.create()) {
             MongoDatabase db = client.getDatabase("bd_comandes");
             MongoCollection<Document> collection = db.getCollection("clients");
-            exercisi2(collection);
+            exercisi3(collection);
         }
     }
 
@@ -26,23 +28,23 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
 
-        String nif = askNonBlank("Introdueix el nif: ");
-        String nom = askNonBlank("Introdueix el nom: ");
+        String nif = askNonBlank(sc, "Introdueix el nif: ");
+        String nom = askNonBlank(sc, "Introdueix el nom: ");
 
-        System.out.println("Introdueix la factoracio total: ");
+        System.out.print("Introdueix la factoracio total: ");
         int facturacio = sc.nextInt();
 
         Client client = new Client(nif, nom, facturacio);
 
         sc.nextLine();
 
-        System.out.println("Introdueix el telefon (opcional): ");
+        System.out.print("Introdueix el telefon (opcional): ");
         String telefon = sc.nextLine();
 
         if(!telefon.isBlank())
             client.setTelefon(telefon);
 
-        System.out.println("Introdueix el correu (opcional): ");
+        System.out.print("Introdueix el correu (opcional): ");
         String correu = sc.nextLine();
 
         if(!correu.isBlank())
@@ -51,14 +53,22 @@ public class Program {
         collection.insertOne(client.toDocument());
     }
 
-    public static String askNonBlank(String question) {
-        Scanner sc = new Scanner(System.in);
-        String v = "";
+    public static void exercisi3(MongoCollection<Document> collection) {
+        List<Client> clients = Client.fromIterable(collection.find());
 
-        while (v.isBlank()) {
-            System.out.println(question);
-            v = sc.nextLine();
+        for(Client c: clients) {
+            System.out.println(c.getNif());
         }
+    }
+
+    public static String askNonBlank(Scanner sc, String question) {
+        String v;
+
+        do {
+            System.out.print(question);
+            v = sc.nextLine();
+        } while (v.isBlank());
+
         return v;
     }
 }

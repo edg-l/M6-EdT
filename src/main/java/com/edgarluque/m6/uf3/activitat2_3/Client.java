@@ -1,6 +1,7 @@
 package com.edgarluque.m6.uf3.activitat2_3;
 
 import com.edgarluque.m6.uf3.activitat2_2.Assignatura;
+import com.mongodb.client.FindIterable;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -48,6 +49,16 @@ public class Client {
             }
         }
 
+    }
+
+    public static List<Client> fromIterable(Iterable<Document> iter) {
+        List<Client> clients = new ArrayList<>();
+
+        for(Document doc: iter) {
+            clients.add(new Client(doc));
+        }
+
+        return clients;
     }
 
     public Document toDocument() {
