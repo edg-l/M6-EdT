@@ -52,4 +52,14 @@ public class Comanda {
     public void setPagada(boolean pagada) {
         this.pagada = pagada;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Comanda{");
+        sb.append("dataComanda=").append(dataComanda);
+        sb.append(", importe=").append(importe);
+        sb.append(", pagada=").append(pagada);
+        sb.append('}');
+        return sb.toString();
+    }
 }
